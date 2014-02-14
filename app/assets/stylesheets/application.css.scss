@@ -12,3 +12,13 @@
  *= require_tree .
  */
 @import "bootstrap";
+
+body {
+  padding: 0 15px;
+}
+
+.form-control {
+  width: 15%;
+  display: inline-block;
+  margin-right: 15px;
+}
