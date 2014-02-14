@@ -29,6 +29,11 @@ gem 'jbuilder', '~> 1.2'
 
 gem 'haml'
 gem 'rails_config'
+gem 'factual-api'
+
+group :development do
+  gem 'debugger'
+end
 
 group :assets do
   gem 'bootstrap-sass'
