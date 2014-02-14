@@ -1,6 +1,8 @@
 XantarBussiness::Application.routes.draw do
   resources :bussinesses
 
+  get '/search', to: 'bussinesses#search', as: :search
+
   root 'bussinesses#index'
 
   # The priority is based upon order of creation: first created -> highest priority.

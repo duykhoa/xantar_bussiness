@@ -9,6 +9,7 @@ Bundler.require(:default, Rails.env)
 module XantarBussiness
   class Application < Rails::Application
     require 'bootstrap-sass'
+    require 'factual'
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
