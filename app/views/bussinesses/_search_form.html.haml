@@ -2,5 +2,5 @@
   .form-actions
     = text_field_tag :tags, nil, data: {category: ApplicationHelper::CATEGORIES, place: ZIP_CODE.all_cities}, id: 'tags'
     = text_field_tag :query, params[:query], placeholder: 'Search keyword', class: 'form-control', id: 'query-text-field'
-    = text_field_tag :place, params[:place], placeholder: 'Where is it', class: 'form-control', id: 'place-text-field'
+    = text_field_tag :place, params[:place], placeholder: 'Cities or Zip code', class: 'form-control', id: 'place-text-field'
     = submit_tag 'Go', :class => 'btn btn-primary'
