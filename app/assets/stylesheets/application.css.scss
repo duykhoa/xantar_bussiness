@@ -22,3 +22,20 @@ body {
   display: inline-block;
   margin-right: 15px;
 }
+
+#tags {
+  display: none;
+}
+
+.ui-helper-hidden-accessible {
+  display:none;
+}
+
+ul.ui-autocomplete {
+  z-index: 1001;
+  border: 2px solid #EEE;
+  list-style-type: none;
+  background: #FFF;
+  width: 15%;
+  padding: 10px;
+}
