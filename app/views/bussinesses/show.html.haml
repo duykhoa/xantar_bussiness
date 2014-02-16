@@ -15,8 +15,14 @@
   #map-canvas
   %h4 How people talk about this bussiness
   - url = [request.host_with_port, 'bussiness', @bussiness['factual_id']].join('/')
-
-  .fb-comments{"data-href" => url, "data-numposts" => "10", "data-colorscheme" => "light", 'data-width' => 700}
-
-= render 'facebook_comment'
+  .comments-box
+    = render 'comments/comment_form'
+    .number
+      Total
+      = @comments.count
+      comments
+    #comments
+      - @comments.each do |comment|
+        - @comment = comment
+        = render 'comments/comment'
 = render 'google_map'

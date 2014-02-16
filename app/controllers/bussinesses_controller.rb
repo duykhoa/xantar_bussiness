@@ -17,6 +17,7 @@ class BussinessesController < ApplicationController
   def show
     query = @factual.table('places')
     @bussiness = query.filters('factual_id' => params[:id]).first
+    @comments = Comment.find_all_by_factual_id @bussiness['factual_id']
   end
 
   private

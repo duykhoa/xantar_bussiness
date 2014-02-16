@@ -28,6 +28,7 @@ gem 'haml'
 gem 'rails_config'
 gem 'factual-api'
 gem 'countries'
+gem 'newrelic_rpm'
 
 group :development do
   gem 'debugger'
