@@ -9,7 +9,7 @@
         = @bussiness['region']
         = Country.find_country_by_alpha2(@bussiness['country']).name
     .return-search
-      = link_to "Back to Home Page", root_path, class: 'btn btn-success'
+      = link_to "Go Back to Search", request.referer, class: 'btn btn-success'
   %h3
     = @bussiness['category_labels'].join(', ')
   #map-canvas
