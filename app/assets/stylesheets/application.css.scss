@@ -70,8 +70,9 @@ h4 {
     color: #888;
   }
   form.comments {
+    background-color: #EEE;
     width: 50%;
-    padding-bottom: 10px;
+    padding: 10px 0;
 
     input[name = 'commit'] {
       margin-top: -15px;
@@ -79,6 +80,7 @@ h4 {
     textarea {
       width: 80%;
       height: 32px;
+      margin-left: 5px;
     }
   }
 }

@@ -1,4 +1,4 @@
 = form_tag comments_path, remote: true, 'data-update-target' => 'comments', class: 'comments' do
   = hidden_field_tag :factual_id, @bussiness['factual_id']
   = text_area_tag :content, nil, class: 'content-comment form-control', row: '1'
-  = submit_tag :send, class: 'btn btn-info'
+  = submit_tag 'Send', class: 'btn btn-info'
