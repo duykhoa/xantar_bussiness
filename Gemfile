@@ -30,6 +30,7 @@ gem 'jbuilder', '~> 1.2'
 gem 'haml'
 gem 'rails_config'
 gem 'factual-api'
+gem 'countries'
 
 group :development do
   gem 'debugger'

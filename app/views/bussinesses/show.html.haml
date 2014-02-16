@@ -1,0 +1,18 @@
+= javascript_include_tag "https://maps.googleapis.com/maps/api/js?key=AIzaSyAjzkiCAgtRZ3fiYPAcg3GAR1bvGLzZpgI&sensor=false"
+
+.container
+  %h1= @bussiness['name']
+  %h2
+    Address:
+    = @bussiness['address']
+    = @bussiness['locality']
+    = @bussiness['region']
+  %h3
+    Categories:
+    = @bussiness['category_labels'].join(', ')
+  %h3
+    Country
+    = Country.find_country_by_alpha2(@bussiness['country']).name
+  #map-canvas
+
+= render 'google_map'

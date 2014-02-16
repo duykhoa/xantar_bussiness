@@ -1,5 +1,5 @@
 class BussinessesController < ApplicationController
-  before_action :factual_authorize, only: [:index, :search]
+  before_action :factual_authorize, only: [:index, :search, :show]
 
   def index
     @results = []
@@ -12,6 +12,11 @@ class BussinessesController < ApplicationController
     respond_to do |format|
       format.html { render 'index' }
     end
+  end
+
+  def show
+    query = @factual.table('places')
+    @bussiness = query.filters('factual_id' => params[:id]).first
   end
 
   private
