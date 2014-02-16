@@ -1,5 +1,6 @@
 XantarBussiness::Application.routes.draw do
   resources :bussinesses
+  resources :comments, only: [:create]
 
   get '/search', to: 'bussinesses#search', as: :search
 
