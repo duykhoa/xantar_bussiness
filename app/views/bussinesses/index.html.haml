@@ -13,7 +13,7 @@
   %tbody
     - @results.each do |result|
       %tr
-        %td= link_to result['name'], bussiness_url(result['factual_id'])
+        %td= link_to result['name'], bussiness_path(result['factual_id'])
         %td= result['category_labels'].join(', ') unless result['category_labels'].blank?
         %td= result['locality']
         %td= result['tel']
