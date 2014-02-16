@@ -2,17 +2,23 @@
 
 .container
   %h1= @bussiness['name']
-  %h2
-    Address:
-    = @bussiness['address']
-    = @bussiness['locality']
-    = @bussiness['region']
+  .rows
+    .address
+      %h2
+        Address:
+        = @bussiness['address']
+        = @bussiness['locality']
+        = @bussiness['region']
+        = Country.find_country_by_alpha2(@bussiness['country']).name
+    .return-search
+      = link_to "Back to Search", root_url, class: 'btn btn-success'
   %h3
-    Categories:
     = @bussiness['category_labels'].join(', ')
-  %h3
-    Country
-    = Country.find_country_by_alpha2(@bussiness['country']).name
   #map-canvas
+  %h4 How people talk about this bussiness
+  - url = [request.host_with_port, 'bussiness', @bussiness['factual_id']].join('/')
+
+  .fb-comments{"data-href" => url, "data-numposts" => "10", "data-colorscheme" => "light", 'data-width' => 700}
 
 = render 'google_map'
+= render 'facebook_comment'
