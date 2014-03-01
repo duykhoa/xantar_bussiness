@@ -3,6 +3,10 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 $(document).ready ->
   $('#query-text-field').autocomplete
-    source: $('#tags').data('category')
+    source: (request, response) ->
+      results = $.ui.autocomplete.filter($('#tags').data('category'), request.term)
+      response(results.slice(0, 10))
   $('#place-text-field').autocomplete
-    source: $('#tags').data('place')
+    source: (request, response) ->
+      results = $.ui.autocomplete.filter($('#tags').data('place'), request.term)
+      response(results.slice(0, 10))
