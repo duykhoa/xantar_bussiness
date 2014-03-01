@@ -7,7 +7,7 @@ class BussinessesController < ApplicationController
 
   def search
     query = @factual.table('places')
-    @results = Bussiness.fatual_results(query, params).first
+    @results, @total_results = Bussiness.factual_results(query, params)
 
     respond_to do |format|
       format.html { render 'index' }

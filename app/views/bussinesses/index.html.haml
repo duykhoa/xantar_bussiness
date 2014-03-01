@@ -3,12 +3,25 @@
   %h1= t '.title', :default => model_class.model_name.human.pluralize.titleize
 .search-box
   = render 'search_form'
+.paginate.pull-right
+  - page = params[:page] || 1
+  - next_page = page.to_i + 1
+  - previous_page = page.to_i - 1
+
+  - if previous_page > 0
+    = link_to "Previous Page", search_path(params.merge(page: page.to_i - 1))
+  - if next_page <= max_pages(@total_results)
+    = link_to "Next Page", search_path(params.merge(page: page.to_i + 1))
+
 %table.table.table-striped
   %thead
     %tr
       %th Name
       %th Category
       %th Locality
+      %th Region
+      %th Neighborhood
+      %th Address
       %th Tel
   %tbody
     - @results.each do |result|
@@ -16,4 +29,7 @@
         %td= link_to result['name'], bussiness_path(result['factual_id'])
         %td= result['category_labels'].join(', ') unless result['category_labels'].blank?
         %td= result['locality']
+        %td= country_name(result['region'])
+        %td= result['neighborhood'].join(', ') if result['neighborhood']
+        %td= result['address']
         %td= result['tel']

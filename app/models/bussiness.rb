@@ -1,25 +1,68 @@
 class Bussiness < ActiveRecord::Base
-  require 'open-uri'
-  require 'json'
+  class << self
+    def factual_results query, params
+      query = build_fatual_query query, params
+      page = params[:page] || '1'
 
-  def self.zip_code_or_place_name places_params
-    places_params.to_i > 0 ? find_city_by_zipcode(places_params) : places_params rescue {"$blank" => false}
-  end
+      [
+        query.select('name', 'region', 'country', 'locality', 'address', 'factual_id', 'tel', 'category_labels', 'neighborhood', 'website').
+          page(page, per: Places::FREE_ACC_QUERY_LIMIT).rows,
+        (query.total_count.to_f/Places::FREE_ACC_QUERY_LIMIT).ceil
+      ]
+    end
 
-  def self.fatual_results query, params
-    place = zip_code_or_place_name params[:place].strip
+    def params_for_place places
+      params = [
+        {'postcode' => places},
+        {'region' =>
+            {'$search' => places}
+        },
+        {
+          'locality' =>
+            {'$search' => places}
+        },
+        {
+          'neighborhood' =>
+            {'$search' => places}
+        },
+        {
+          'address' =>
+            {'$search' => places}
+        },
+      ]
 
-    query = query.filters('locality' => place) unless params[:place].blank?
+      country = Country.find_country_by_name(places)
+      params << {'country' => country.alpha2.downcase} if country
 
-    query_by_category = query.filters('category_labels' => params[:query].strip) unless params[:query].blank?
-    query_by_place_name = query.search(params[:query].strip)
+      params
+    end
 
-    category_rows = query_by_category.rows if query_by_category
+    def query_by_place query, places
+      query.filters({
+        '$or' => params_for_place(places)
+      })
+    end
 
-    [category_rows.to_a + query_by_place_name.rows].uniq { |item| item['factual_id'] }
-  end
+    def query_by_name query, name
+      query.filters({
+        '$or' => [
+          {
+            'category_labels' => name
+          },
+          {
+            'name' =>
+              {'$search' => name}
+          }
+        ]
+      })
+    end
 
-  def self.find_city_by_zipcode zipcode
-    JSON.parse(open("https://s3.amazonaws.com/zips.dryan.io/#{zipcode}.json").read)["locality"]
+    def build_fatual_query query, params
+      a_query = query
+      a_query = query_by_place(query, params[:place].strip) if params[:place].present?
+      a_query = query_by_name(a_query, params[:query].to_s.strip) if params[:query].present?
+
+      a_query
+    end
   end
 end
