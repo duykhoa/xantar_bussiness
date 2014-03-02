@@ -11,26 +11,36 @@ class Bussiness < ActiveRecord::Base
       ]
     end
 
-    def params_for_place places
-      params = [
-        {'postcode' => places},
+    def partial_params place
+      [
         {'region' =>
-            {'$search' => places}
+            {'$search' => place}
         },
         {
           'locality' =>
-            {'$search' => places}
+            {'$search' => place}
         },
         {
           'neighborhood' =>
-            {'$search' => places}
+            {'$search' => place}
         },
         {
           'address' =>
-            {'$search' => places}
+            {'$search' => place}
         }
       ]
+    end
 
+    def places_params places
+      params = [{'postcode' => places}]
+      params.concat partial_params places
+      places.split(',').each { |place| params.concat partial_params place }
+
+      params
+    end
+
+    def params_for_place places
+      params =  places_params places
       country = Country.find_country_by_name(places)
       params << {'country' => country.alpha2} if country
 
