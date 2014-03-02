@@ -37,14 +37,14 @@ class Bussiness < ActiveRecord::Base
       params
     end
 
-    def query_by_place query, places
-      query.filters({
+    def query_by_place places
+      {
         '$or' => params_for_place(places)
-      })
+      }
     end
 
-    def query_by_name query, name
-      query.filters({
+    def query_by_name name
+      {
         '$or' => [
           {
             'category_labels' => name
@@ -54,15 +54,28 @@ class Bussiness < ActiveRecord::Base
               {'$search' => name}
           }
         ]
-      })
+      }
+    end
+
+    def factual_params params
+      if params[:place].present? && params[:query].present?
+        {
+          '$and' => [
+            query_by_place(params[:place].strip),
+            query_by_name(params[:query].strip)
+          ]
+        }
+      elsif params[:place].present?
+        query_by_place(params[:place].strip)
+      elsif params[:query].present?
+        query_by_name(params[:query].strip)
+      else
+        {}
+      end
     end
 
     def build_fatual_query query, params
-      a_query = query
-      a_query = query_by_place(query, params[:place].strip) if params[:place].present?
-      a_query = query_by_name(a_query, params[:query].to_s.strip) if params[:query].present?
-
-      a_query
+      query.filters factual_params(params)
     end
   end
 end
