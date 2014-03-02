@@ -28,11 +28,11 @@ class Bussiness < ActiveRecord::Base
         {
           'address' =>
             {'$search' => places}
-        },
+        }
       ]
 
       country = Country.find_country_by_name(places)
-      params << {'country' => country.alpha2.downcase} if country
+      params << {'country' => country.alpha2} if country
 
       params
     end
