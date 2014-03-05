@@ -11,4 +11,8 @@ module ApplicationHelper
 
     country ? country : region
   end
+
+  def select_params
+    ['name', 'country', 'language', 'locality', 'address', 'factual_id', 'region', 'tel', 'category_ids', 'category_labels', 'latitude', 'longtitude']
+  end
 end

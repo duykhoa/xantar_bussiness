@@ -87,5 +87,14 @@ class Bussiness < ActiveRecord::Base
     def build_fatual_query query, params
       query.filters factual_params(params)
     end
+
+    def build_params_for_approximately_search bussiness
+      {
+       'name' =>  bussiness['name'],
+       'latitude' =>  bussiness['latitude'],
+       'longitude' =>  bussiness['longitude'],
+       'tel' =>  bussiness['tel']
+      }
+    end
   end
 end

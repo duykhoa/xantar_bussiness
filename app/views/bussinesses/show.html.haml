@@ -18,6 +18,13 @@
   %h4
     Website:
     = @bussiness['tel']
+  %h4
+    Addition Information
+    - if@addition_info
+      - @addition_info[1].first.reject {|key, value| select_params.include?(key)}.each do |key, value|
+        %h5
+          = "#{key.humanize}: "
+          = value
   #map-canvas
   %h4 How people talk about this bussiness
   - url = [request.host_with_port, 'bussiness', @bussiness['factual_id']].join('/')
