@@ -93,8 +93,8 @@ class Bussiness < ActiveRecord::Base
        'name' =>  bussiness['name'],
        'latitude' =>  bussiness['latitude'],
        'longitude' =>  bussiness['longitude'],
-       'tel' =>  bussiness['tel'],
-       'website' => bussiness['website']
+       'tel' =>  bussiness['tel']|| {"$blank" => true},
+       'website' => bussiness['website'] || {"$blank" => true}
       }
     end
   end
