@@ -3,7 +3,7 @@ module ApplicationHelper
     max = Places::FREE_ACC_ROW_LIMIT/ Places::FREE_ACC_QUERY_LIMIT
     page_results = (results_count.to_f/Places::FREE_ACC_QUERY_LIMIT).ceil
 
-    page_results > max ? max: page_results
+    page_results > max ? max : page_results
   end
 
   def country_name region

@@ -7,7 +7,7 @@ class Bussiness < ActiveRecord::Base
       [
         query.select('name', 'region', 'country', 'locality', 'address', 'factual_id', 'tel', 'category_labels', 'neighborhood', 'website').
           page(page, per: Places::FREE_ACC_QUERY_LIMIT).rows,
-        (query.total_count.to_f/Places::FREE_ACC_QUERY_LIMIT).ceil
+        query.total_count
       ]
     end
 
