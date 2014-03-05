@@ -92,9 +92,9 @@ class Bussiness < ActiveRecord::Base
     def build_params_for_approximately_search bussiness
       {
        'name' =>  bussiness['name'],
-       'latitude' =>  bussiness['latitude'],
-       'longitude' =>  bussiness['longitude'],
-       'tel' =>  bussiness['tel']|| {"$blank" => true},
+       'latitude' =>  bussiness['latitude'] || {"$blank" => true},
+       'longitude' =>  bussiness['longitude'] || {"$blank" => true},
+       'tel' =>  bussiness['tel'] || {"$blank" => true},
        'website' => bussiness['website'] || {"$blank" => true}
       }
     end
