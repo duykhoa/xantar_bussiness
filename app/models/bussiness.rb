@@ -57,7 +57,8 @@ class Bussiness < ActiveRecord::Base
       {
         '$or' => [
           {
-            'category_labels' => name
+            'category_labels' =>
+              {'$search' => name}
           },
           {
             'name' =>
