@@ -13,6 +13,6 @@ module ApplicationHelper
   end
 
   def select_params
-    ['hours', 'website', 'name', 'country', 'language', 'locality', 'address', 'factual_id', 'region', 'tel', 'category_ids', 'category_labels', 'latitude', 'longitude']
+    ['meal_lunch', 'wifi', 'room_private', 'stars', 'internet', 'rating', 'degrees', 'insurances']
   end
 end
