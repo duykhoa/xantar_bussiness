@@ -23,10 +23,6 @@ class Bussiness < ActiveRecord::Base
         {
           'neighborhood' =>
             {'$search' => place}
-        },
-        {
-          'address' =>
-            {'$search' => place}
         }
       ]
     end
