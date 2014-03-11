@@ -88,3 +88,11 @@ h4 {
 h5 {
   line-height: 1.7em;
 }
+
+.row {
+  .col-md-5.cat-url {
+    img {
+      max-height: 300px;
+    }
+  }
+}

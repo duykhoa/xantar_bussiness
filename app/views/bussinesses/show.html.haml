@@ -25,7 +25,7 @@
               = value.is_a?(Array) ? value.join(', ') : value
     - if @cat_url.present?
       .col-md-5.cat-url
-        = image_tag @cat_url, class: 'img-circle', height: '300', width: '300'
+        = image_tag @cat_url, class: 'img-circle'
     .return-search
       = link_to "Go Back to Search", request.referer, class: 'btn btn-success'
   #map-canvas
