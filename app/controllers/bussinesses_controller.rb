@@ -31,7 +31,7 @@ class BussinessesController < ApplicationController
 
   def cat_url
     begin
-      Nokogiri::XML(open("http://thecatapi.com/api/images/get?format=xml&size=small")).css("url").text
+      Nokogiri::XML(open(Settings.cat_api.url)).css("url").text
     rescue Exception
       ''
     end
@@ -47,7 +47,12 @@ class BussinessesController < ApplicationController
 
     @addition_info = response.select { |key, value| value.count > 0 }.first
 
-    true if response[:hotels_us_query].present?
+    display_cat_image response
+  end
+
+  def display_cat_image response
+    response[:hotels_us_query].send(:response)["included_rows"] > 0 ||
+    response[:restaurants_us_query].send(:response)["included_rows"] > 0
   end
 
   def factual_query bussiness

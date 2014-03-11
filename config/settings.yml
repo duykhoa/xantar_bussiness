@@ -1,3 +1,5 @@
 factual:
   key: GWNlPUbmW825V89ByFH7VD69rfUXmYlvE4Yq8Ajz
   secret: 31YAnIni5oq5ZjhgcJxk1g1BOzl3AWliCBrvu9g2
+cat_api:
+  url: http://thecatapi.com/api/images/get?format=xml&size=small&type=jpg,png
