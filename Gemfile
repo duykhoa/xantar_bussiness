@@ -29,6 +29,7 @@ gem 'rails_config'
 gem 'factual-api'
 gem 'countries'
 gem 'newrelic_rpm'
+gem 'nokogiri'
 
 group :development do
   gem 'debugger'

@@ -1,30 +1,33 @@
 .container
   %h1= @bussiness['name']
-  .rows
-    .address
+  .row
+    .col-md-5.address
       %h2
         Address:
         = @bussiness['address']
         = @bussiness['locality']
         = @bussiness['region']
         = Country.find_country_by_alpha2(@bussiness['country']).name
+      %h3
+        = @bussiness['category_labels'].join(', ')
+      %h4
+        Website:
+        = link_to @bussiness['website'], @bussiness['website']
+      %h4
+        Tel
+        = @bussiness['tel']
+      %h4
+        Addition Information
+        - if@addition_info
+          - @addition_info[1].first.select {|key, value| select_params.include?(key)}.each do |key, value|
+            %h5
+              = "#{key.humanize}: "
+              = value.is_a?(Array) ? value.join(', ') : value
+    - if @cat_url.present?
+      .col-md-5.cat-url
+        = image_tag @cat_url, class: 'img-circle', height: '300', width: '300'
     .return-search
       = link_to "Go Back to Search", request.referer, class: 'btn btn-success'
-  %h3
-    = @bussiness['category_labels'].join(', ')
-  %h4
-    Website:
-    = link_to @bussiness['website'], @bussiness['website']
-  %h4
-    Website:
-    = @bussiness['tel']
-  %h4
-    Addition Information
-    - if@addition_info
-      - @addition_info[1].first.select {|key, value| select_params.include?(key)}.each do |key, value|
-        %h5
-          = "#{key.humanize}: "
-          = value.is_a?(Array) ? value.join(', ') : value
   #map-canvas
   %h4 How people talk about this bussiness
   - url = [request.host_with_port, 'bussiness', @bussiness['factual_id']].join('/')
