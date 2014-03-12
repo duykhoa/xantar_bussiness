@@ -15,4 +15,8 @@ module ApplicationHelper
   def select_params
     ['meal_lunch', 'wifi', 'room_private', 'stars', 'internet', 'rating', 'degrees', 'insurances']
   end
+
+  def lat_long_places results
+    results.map { |result| [result['latitude'], result['longitude'], result['name']] }
+  end
 end

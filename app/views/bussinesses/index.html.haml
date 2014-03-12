@@ -3,6 +3,7 @@
   %h1= t '.title', :default => model_class.model_name.human.pluralize.titleize
 .search-box
   = render 'search_form'
+#map-canvas-search
 .paginate.pull-right
   - page = params[:page] || 1
   - next_page = page.to_i + 1
@@ -33,3 +34,5 @@
         %td= result['neighborhood'].join(', ') if result['neighborhood']
         %td= result['address']
         %td= result['tel']
+- if params[:place].present? && @results.count > 0
+  = render 'google_map_multi_markers', {results: lat_long_places(@results)}
