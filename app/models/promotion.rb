@@ -4,7 +4,7 @@ class Promotion < ActiveRecord::Base
   end
 
   def self.promoted_factual_ids query
-    self.where("query LIKE '%#{query}%'").map(&:factual_id).uniq
+    self.where("LOWER(query) LIKE '%#{query.downcase}%'").map(&:factual_id).uniq
   end
 
   before_save :promotion_less_than_10
