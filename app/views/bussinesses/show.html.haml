@@ -11,7 +11,7 @@
         = @bussiness['region']
         = Country.find_country_by_alpha2(@bussiness['country']).name
       %h3
-        = @bussiness['category_labels'].join(', ')
+        = @bussiness['category_labels'].join(', ') if @bussiness['category_labels'].present?
       %h4
         Website:
         = link_to @bussiness['website'], @bussiness['website']
