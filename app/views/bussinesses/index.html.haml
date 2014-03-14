@@ -25,6 +25,17 @@
       %th Address
       %th Tel
   %tbody
+    - if @promoted_factual.present?
+      - @promoted_factual.each do |result|
+        %tr.feature
+          %td= link_to result['name'], bussiness_path(result['factual_id'])
+          %td= result['category_labels'].join(', ') unless result['category_labels'].blank?
+          %td= result['locality']
+          %td= country_name(result['region'])
+          %td= result['neighborhood'].join(', ') if result['neighborhood']
+          %td= result['address']
+          %td= result['tel']
+
     - @results.each do |result|
       %tr
         %td= link_to result['name'], bussiness_path(result['factual_id'])

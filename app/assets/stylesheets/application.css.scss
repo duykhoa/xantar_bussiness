@@ -98,3 +98,16 @@ h5 {
     }
   }
 }
+
+table {
+  tr.feature {
+    color: #EA2635;
+    a, a:hover {
+      color: #EA2635;
+    }
+  }
+}
+
+#vote-up {
+  cursor: pointer;
+}

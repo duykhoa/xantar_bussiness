@@ -2,14 +2,14 @@ require 'open-uri'
 
 class BussinessesController < ApplicationController
   before_action :factual_authorize, only: [:index, :search, :show]
+  before_action :promoted_factual, only: :search
 
   def index
     @results = []
   end
 
   def search
-    query = @factual.table('places')
-    @results, @total_results = Bussiness.factual_results(query, params)
+    @results, @total_results = Bussiness.factual_results(@query, params)
 
     respond_to do |format|
       format.html { render 'index' }
@@ -65,5 +65,10 @@ class BussinessesController < ApplicationController
 
   def factual_authorize
     @factual = Factual.new(Settings.factual.key, Settings.factual.secret)
+  end
+
+  def promoted_factual
+    @query = @factual.table('places')
+    @promoted_factual = Bussiness.promoted_factual params[:query], @query
   end
 end

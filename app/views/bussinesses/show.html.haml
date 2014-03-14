@@ -1,5 +1,7 @@
 .container
-  %h1= @bussiness['name']
+  %h1
+    = @bussiness['name']
+    #vote-up.btn.btn-warning.glyphicon.glyphicon-thumbs-up{'data-factual-id' => @bussiness['factual_id'], 'data-query' => @bussiness['category_labels']}
   .row
     .col-md-5.address
       %h2

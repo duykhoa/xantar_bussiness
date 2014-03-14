@@ -94,5 +94,21 @@ class Bussiness < ActiveRecord::Base
        'website' => bussiness['website'] || {"$blank" => true}
       }
     end
+
+    def promoted_factual params_query, query
+      promoted_factual_ids = Promotion.promoted_factual_ids params_query
+
+      query_params = promoted_factual_ids.inject([]) do |factual_params, id|
+        factual_params << {"factual_id" => id}
+      end
+
+      if query_params.count > 0
+        query.select('name', 'region', 'country', 'locality', 'address', 'factual_id', 'tel', 'category_labels', 'neighborhood', 'website', 'longitude', 'latitude').
+          filters({'$or' => query_params}).
+          rows
+      else
+        []
+      end
+    end
   end
 end
