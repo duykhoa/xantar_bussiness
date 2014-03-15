@@ -20,6 +20,7 @@ class BussinessesController < ApplicationController
     query = @factual.table('places')
     @bussiness = query.filters('factual_id' => params[:id]).first
     @comments = Comment.find_all_by_factual_id @bussiness['factual_id']
+    @vote_count = vote_count
 
     @cat_url = cat_url_for_hotel
   end
@@ -69,6 +70,10 @@ class BussinessesController < ApplicationController
 
   def promoted_factual
     @query = @factual.table('places')
-    @promoted_factual = Bussiness.promoted_factual params[:query], @query
+    @promoted_factual = Bussiness.promoted_factual params[:query], params[:place], @query
+  end
+
+  def vote_count
+    Promotion.promotion_count_by_factual_id @bussiness['factual_id']
   end
 end

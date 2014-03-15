@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140314131839) do
+ActiveRecord::Schema.define(version: 20140315014844) do
 
   create_table "comments", force: true do |t|
     t.string   "content"
@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 20140314131839) do
   create_table "promotions", force: true do |t|
     t.string "factual_id"
     t.string "query"
+    t.string "place"
   end
 
 end

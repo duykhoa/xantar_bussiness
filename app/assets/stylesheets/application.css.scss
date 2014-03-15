@@ -110,4 +110,8 @@ table {
 
 #vote-up {
   cursor: pointer;
+
+  &:before {
+    margin-right: 10px;
+  }
 }
