@@ -36,7 +36,9 @@
           %td= result['address']
           %td= result['tel']
 
-    - @results.each do |result|
+    - promoted_ids = []
+    - promoted_ids = @promoted_factual.map { |promoted_factual| promoted_factual['factual_id'] } if @promoted_factual.present?
+    - @results.reject { |result| promoted_ids.include?(result['factual_id'])}.each do |result|
       %tr
         %td= link_to result['name'], bussiness_path(result['factual_id'])
         %td= result['category_labels'].join(', ') unless result['category_labels'].blank?
