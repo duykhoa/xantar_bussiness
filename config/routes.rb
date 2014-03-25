@@ -3,7 +3,7 @@ XantarBussiness::Application.routes.draw do
   resources :comments, only: [:create]
 
   get '/search', to: 'bussinesses#search', as: :search
-  post 'promote' => 'promotions#create', as: :promote
+  post 'vote' => 'votes#create', as: :vote
 
   root 'bussinesses#index'
 

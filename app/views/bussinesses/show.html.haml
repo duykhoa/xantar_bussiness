@@ -1,7 +1,8 @@
 .container
   %h1
     = @bussiness['name']
-    #vote-up.btn.btn-warning.glyphicon.glyphicon-thumbs-up{'data-factual-id' => @bussiness['factual_id'], 'data-query' => @bussiness['category_labels'], 'data-place' => @bussiness['locality'], class: "#{'disabled' if @vote_count >= 10}"}= @vote_count
+    #vote-up.btn.btn-warning.glyphicon.glyphicon-thumbs-up{'data-factual-id' => @bussiness['factual_id'], 'data-query' => @bussiness['category_labels'], 'data-place' => @bussiness['locality'], class: "#{'disabled' unless !@vote || @vote.live_vote?}"}
+      = @vote ? @vote.promotions.count : 0
   .row
     .col-md-5.address
       %h2

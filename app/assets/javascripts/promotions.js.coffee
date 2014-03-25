@@ -3,12 +3,12 @@ $(document).ready ->
     factual_id = $(this).data('factual-id')
     query = $(this).data('query')
     place = $(this).data('place')
-    factual_url = '/promote'
+    factual_url = '/vote'
     $this = $(this)
     $.ajax
       url: factual_url
       type: 'POST'
-      data: {promotion: {factual_id: factual_id, query: query, place: place}}
+      data: {vote: {factual_id: factual_id, query: query, place: place}}
       success: (data, status, response) ->
         if data.status == true
           $this.text(parseInt($this.html()) + 1)

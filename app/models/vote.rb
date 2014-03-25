@@ -1,8 +1,10 @@
 class Vote < ActiveRecord::Base
 
-  MAX_PROMOTIONS_PER_VOTE = 10
+  MAX_PROMOTIONS_PER_VOTE = 9
 
-  belongs_to :vote
+  has_many :promotions
+
+  before_save :not_exist_another_live_vote
 
   default_scope order("created_at DESC")
 
@@ -10,10 +12,16 @@ class Vote < ActiveRecord::Base
     self.where("LOWER(query) LIKE '%#{query.downcase}%' AND LOWER(place) = '#{place.downcase}'").map(&:factual_id).uniq
   end
 
-  before_save :exist_another_live_vote
+  def not_exist_another_live_vote
+    !exist_another_live_vote
+  end
 
   def exist_another_live_vote
     another_vote = Vote.find_by_id factual_id
-    another_vote.present? || another_vote.promotions.count < MAX_PROMOTIONS_PER_VOTE
+    another_vote.present? && another_vote.live_vote?
+  end
+
+  def live_vote?
+    promotions.count <= MAX_PROMOTIONS_PER_VOTE
   end
 end

@@ -1,15 +1,11 @@
 class Promotion < ActiveRecord::Base
-  def self.promotion_count_by_factual_id factual_id
-    self.where(factual_id: factual_id).count
-  end
 
-  def self.promoted_factual_ids query, place
-    self.where("LOWER(query) LIKE '%#{query.downcase}%' AND LOWER(place) = '#{place.downcase}'").map(&:factual_id).uniq
-  end
+  belongs_to :votes
 
-  before_save :promotion_less_than_10
+  before_save :promotion_count_checking
 
-  def promotion_less_than_10
-    self.class.promotion_count_by_factual_id(self.factual_id) < 10
+  def promotion_count_checking
+    vote = Vote.find_by_id vote_id
+    vote.live_vote?
   end
 end
