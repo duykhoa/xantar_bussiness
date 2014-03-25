@@ -17,11 +17,16 @@ class Vote < ActiveRecord::Base
   end
 
   def exist_another_live_vote
-    another_vote = Vote.find_by_id factual_id
+    another_vote = Vote.find_by_factual_id factual_id
     another_vote.present? && another_vote.live_vote?
   end
 
   def live_vote?
     promotions.count <= MAX_PROMOTIONS_PER_VOTE
+  end
+
+  def self.promoted_factual_ids query, place
+    query.gsub!(',', '')
+    self.where("LOWER(query) LIKE '%#{query.downcase}%' AND LOWER(place) = '#{place.downcase}'").map(&:factual_id).uniq
   end
 end

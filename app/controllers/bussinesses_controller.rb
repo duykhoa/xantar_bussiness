@@ -21,7 +21,7 @@ class BussinessesController < ApplicationController
     @bussiness = query.filters('factual_id' => params[:id]).first
     @comments = Comment.find_all_by_factual_id @bussiness['factual_id']
 
-    @vote = Vote.find_by_factual_id params[:id]
+    @vote = Vote.find_by_factual_id @bussiness['factual_id']
 
     @cat_url = cat_url_for_hotel
   end

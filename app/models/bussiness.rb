@@ -96,8 +96,7 @@ class Bussiness < ActiveRecord::Base
     end
 
     def promoted_factual params_query, place, query
-      promoted_factual_ids = Promotion.promoted_factual_ids params_query, place
-
+      promoted_factual_ids = Vote.promoted_factual_ids params_query, place
       query_params = promoted_factual_ids.inject([]) do |factual_params, id|
         factual_params << {"factual_id" => id}
       end
