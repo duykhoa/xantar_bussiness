@@ -11,5 +11,5 @@ $(document).ready ->
       data: {vote: {factual_id: factual_id, query: query, place: place}}
       success: (data, status, response) ->
         if data.status == true
-          $this.text(parseInt($this.html()) + 1)
+          $this.text('Voted')
         $this.addClass('disabled')
