@@ -10,6 +10,7 @@ class BussinessesController < ApplicationController
 
   def search
     @results, @total_results = Bussiness.factual_results(@query, params)
+    @results.sort_by! { |result| -Comment.find_all_by_factual_id(result['factual_id']).count }
 
     respond_to do |format|
       format.html { render 'index' }

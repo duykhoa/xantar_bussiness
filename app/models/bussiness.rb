@@ -2,11 +2,16 @@ class Bussiness < ActiveRecord::Base
   class << self
     def factual_results query, params
       query = build_fatual_query query, params
-      page = params[:page] || '1'
+
+      # get 2 first page
+      results_page_1 = query.select('name', 'region', 'country', 'locality', 'address', 'factual_id', 'tel', 'category_labels', 'neighborhood', 'website', 'longitude', 'latitude').
+          page(1, per: Places::FREE_ACC_QUERY_LIMIT).rows
+
+      results_page_2 = query.select('name', 'region', 'country', 'locality', 'address', 'factual_id', 'tel', 'category_labels', 'neighborhood', 'website', 'longitude', 'latitude').
+          page(2, per: Places::FREE_ACC_QUERY_LIMIT).rows
 
       [
-        query.select('name', 'region', 'country', 'locality', 'address', 'factual_id', 'tel', 'category_labels', 'neighborhood', 'website', 'longitude', 'latitude').
-          page(page, per: Places::FREE_ACC_QUERY_LIMIT).rows,
+        results_page_1.concat(results_page_2),
         query.total_count
       ]
     end
