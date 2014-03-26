@@ -4,30 +4,49 @@
 .search-box
   = render 'search_form'
 #map-canvas-search
-.paginate.pull-right
-  - page = params[:page] || 1
-  - next_page = page.to_i + 1
-  - previous_page = page.to_i - 1
+-#.paginate.pull-right
+  -#- page = params[:page] || 1
+  -#- next_page = page.to_i + 1
+  -#- previous_page = page.to_i - 1
 
-  - if previous_page > 0
-    = link_to "Previous Page", search_path(params.merge(page: page.to_i - 1))
-  - if next_page <= max_pages(@total_results)
-    = link_to "Next Page", search_path(params.merge(page: page.to_i + 1))
+  -#- if previous_page > 0
+    -#= link_to "Previous Page", search_path(params.merge(page: page.to_i - 1))
+  -#- if next_page <= max_pages(@total_results)
+    -#= link_to "Next Page", search_path(params.merge(page: page.to_i + 1))
+#results-container
+  .simple-navigation.top
+    .simple-pagination-first
+    .simple-pagination-previous
+    .simple-pagination-page-numbers
+    .simple-pagination-next
+    .simple-pagination-last
 
-%table.table.table-striped
-  %thead
-    %tr
-      %th Name
-      %th Category
-      %th Locality
-      %th Region
-      %th Neighborhood
-      %th Address
-      %th Tel
-  %tbody
-    - if @promoted_factual.present?
-      - @promoted_factual.each do |result|
-        %tr.feature
+  %table.table.table-striped
+    %thead
+      %tr
+        %th Name
+        %th Category
+        %th Locality
+        %th Region
+        %th Neighborhood
+        %th Address
+        %th Tel
+    %tbody
+      - if @promoted_factual.present?
+        - @promoted_factual.each do |result|
+          %tr.feature
+            %td= link_to result['name'], bussiness_path(result['factual_id'])
+            %td= result['category_labels'].join(', ') unless result['category_labels'].blank?
+            %td= result['locality']
+            %td= country_name(result['region'])
+            %td= result['neighborhood'].join(', ') if result['neighborhood']
+            %td= result['address']
+            %td= result['tel']
+
+      - promoted_ids = []
+      - promoted_ids = @promoted_factual.map { |promoted_factual| promoted_factual['factual_id'] } if @promoted_factual.present?
+      - @results.reject { |result| promoted_ids.include?(result['factual_id'])}.each do |result|
+        %tr
           %td= link_to result['name'], bussiness_path(result['factual_id'])
           %td= result['category_labels'].join(', ') unless result['category_labels'].blank?
           %td= result['locality']
@@ -35,17 +54,11 @@
           %td= result['neighborhood'].join(', ') if result['neighborhood']
           %td= result['address']
           %td= result['tel']
-
-    - promoted_ids = []
-    - promoted_ids = @promoted_factual.map { |promoted_factual| promoted_factual['factual_id'] } if @promoted_factual.present?
-    - @results.reject { |result| promoted_ids.include?(result['factual_id'])}.each do |result|
-      %tr
-        %td= link_to result['name'], bussiness_path(result['factual_id'])
-        %td= result['category_labels'].join(', ') unless result['category_labels'].blank?
-        %td= result['locality']
-        %td= country_name(result['region'])
-        %td= result['neighborhood'].join(', ') if result['neighborhood']
-        %td= result['address']
-        %td= result['tel']
+  .simple-navigation
+    .simple-pagination-first
+    .simple-pagination-previous
+    .simple-pagination-page-numbers
+    .simple-pagination-next
+    .simple-pagination-last
 - if params[:place].present? && @results.count > 0
   = render 'google_map_multi_markers', {results: lat_long_places(@results)}

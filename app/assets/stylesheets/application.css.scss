@@ -115,3 +115,48 @@ table {
     margin-right: 10px;
   }
 }
+.simple-navigation {
+  .simple-pagination-first {
+    display: inline-block;
+  }
+
+  .simple-pagination-previous {
+    display: inline-block;
+  }
+
+  .simple-pagination-page-numbers {
+    display: inline-block;
+    padding: 0 5px;
+    a {
+      padding: 0 2px;
+    }
+  }
+
+  .simple-pagination-next {
+    display: inline-block;
+  }
+
+  .simple-pagination-last {
+    display: inline-block;
+  }
+}
+
+.simple-navigation.top {
+  float: right;
+}
+
+.simple-pagination-page-x-of-x.top {
+  margin-right: 5px;
+  float: right;
+}
+
+.simple-pagination-navigation-disabled{
+  &:hover {
+   text-decoration: none;
+    color: #CCC;
+    cursor: not-allowed;
+  }
+  text-decoration: none;
+  color: #CCCk;
+  cursor: not-allowed;
+}
