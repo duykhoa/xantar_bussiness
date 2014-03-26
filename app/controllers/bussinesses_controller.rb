@@ -24,6 +24,13 @@ class BussinessesController < ApplicationController
     @vote = Vote.find_by_factual_id @bussiness['factual_id']
 
     @cat_url = cat_url_for_hotel
+
+    alternate_id = alternate_bussiness_id
+
+    if alternate_id
+      @alternate_bussiness = query.filters('factual_id' => alternate_id).first
+      Vote.impression @alternate_bussiness['factual_id']
+    end
   end
 
   private
@@ -72,5 +79,25 @@ class BussinessesController < ApplicationController
   def promoted_factual
     @query = @factual.table('places')
     @promoted_factual = Bussiness.promoted_factual params[:query], params[:place], @query
+  end
+
+  def alternate_bussiness_id
+    votes_by_city = Vote.find_all_by_place(@bussiness['locality'])
+    random_vote = votes_by_city
+      .select { |vote| longest_common_substr([@bussiness['category_labels'], vote.query]) }
+      .reject { |vote| vote.factual_id.eql?(@bussiness['factual_id']) || !vote.live_vote? }
+      .sample
+    random_vote.factual_id if random_vote
+  end
+
+  def longest_common_substr(strings)
+    shortest = strings.min_by(&:length)
+    maxlen = shortest.length
+    maxlen.downto(0) do |len|
+      0.upto(maxlen - len) do |start|
+        substr = shortest[start,len]
+        return substr if strings.all?{|str| str.include? substr }
+      end
+    end
   end
 end

@@ -97,6 +97,10 @@ class Bussiness < ActiveRecord::Base
 
     def promoted_factual params_query, place, query
       promoted_factual_ids = Vote.promoted_factual_ids params_query, place
+      promoted_factual_ids.reject! { |id| !Vote.find_by_factual_id(id).live_vote? }
+
+      # Impression every factual_id
+      Vote.impression_list promoted_factual_ids
       query_params = promoted_factual_ids.inject([]) do |factual_params, id|
         factual_params << {"factual_id" => id}
       end

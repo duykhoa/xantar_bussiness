@@ -6,6 +6,11 @@
       'data-place' => @bussiness['locality'],
       class: "#{'disabled' if @vote && @vote.live_vote?}"}
       Vote
+  - if @alternate_bussiness
+    .alert.alert-info.alert-dismissable
+      May be you like this place also
+      %strong
+        = link_to @alternate_bussiness['name'], bussiness_path(@alternate_bussiness['factual_id'])
   .row
     .col-md-5.address
       %h2

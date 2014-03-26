@@ -6,7 +6,7 @@ class Vote < ActiveRecord::Base
 
   before_save :not_exist_another_live_vote
 
-  default_scope order("created_at DESC")
+  default_scope { order("created_at DESC") }
 
   def self.last_votes_factual_ids query, place
     self.where("LOWER(query) LIKE '%#{query.downcase}%' AND LOWER(place) = '#{place.downcase}'").map(&:factual_id).uniq
@@ -28,5 +28,16 @@ class Vote < ActiveRecord::Base
   def self.promoted_factual_ids query, place
     query.gsub!(',', '')
     self.where("LOWER(query) LIKE '%#{query.downcase}%' AND LOWER(place) = '#{place.downcase}'").map(&:factual_id).uniq
+  end
+
+  def self.impression_list factual_ids
+    factual_ids.each do |factual_id|
+      impression factual_id
+    end
+  end
+
+  def self.impression factual_id
+    vote = Vote.find_by_factual_id factual_id
+    vote.promotions.create
   end
 end
