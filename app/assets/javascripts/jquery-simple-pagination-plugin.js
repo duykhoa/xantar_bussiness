@@ -246,6 +246,33 @@ $.fn.simplePagination = function(options)
 
 			var page_number = +$(this).attr('data-' + settings.html_prefix + '-page-number');
 			refresh_simple_pagination(page_number);
+
+      // Update Markers
+      markers.forEach(function(marker){
+        marker.setMap(null);
+      });
+      markers.length = 0;
+
+      tr_arrays = $("tr");
+      for (var i = 1; i < tr_arrays.length; i++) {
+        if (tr_arrays[i].style.display != 'none') {
+          // declare a marker
+          latitude = tr_arrays[i].getAttribute("data-latitude");
+          longtitude = tr_arrays[i].getAttribute("data-longitude");
+          name = tr_arrays[i].getAttribute("data-name");
+
+          var place = new google.maps.LatLng(latitude, longtitude);
+          var marker = new google.maps.Marker({
+            position: place,
+            map: map,
+            title: name
+          });
+
+          markers.push(marker);
+        }
+      }
+      center = new google.maps.LatLng(tr_arrays[1].getAttribute("data-latitude"), tr_arrays[1].getAttribute("data-longitude"));
+      map.setCenter(center);
 		});
 
 		$(container_id + ' .' + settings.html_prefix + '-items-per-page').change(function()
